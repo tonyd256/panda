@@ -1,31 +1,31 @@
-var model = require('../models/user.js');
+var model = require('../models/user.js').mUser;
 
 exports.user = {
   get: function (id, cb) {
     if (id) {
       model.findById(id, cb);
     } else {
-      mdoel.find({}, cb);
+      model.find({}, cb);
     }
   },
-  post: function (data, cd) {
+  post: function (data, cb) {
     var u = new model({
       name: data.name,
       email: data.email,
       password: data.password
     });
-    
+
     u.save(cb);
   },
-  put: function (data, cb) {
-    model.findById(data.id, function (err, user) {
+  put: function (id, data, cb) {
+    model.findById(id, function (err, user) {
       if (err) return cb(err);
-      
-      data.name && user.name = data.name;
-      data.email && user.email = data.email;
-      data.password && user.password = data.password;
+
+      data.name && (user.name = data.name);
+      data.email && (user.email = data.email);
+      data.password && (user.password = data.password);
       user.updated = Date.now();
-      
+
       user.save(cb);
     });
   }

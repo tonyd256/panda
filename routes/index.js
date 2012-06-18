@@ -1,4 +1,12 @@
-var user = require('../controllers/user.js');
+var user = require('../controllers/user.js').user;
+var beer = require('../controllers/beer.js').beer;
+var inventory = require('../controllers/inventory').inventory;
+
+var items = {
+  'user': user,
+  'beer': beer,
+  'inventory': inventory
+};
 
 exports.index = function(req, res) {
   res.render('index', { title: 'Express' });
@@ -12,29 +20,50 @@ exports.info = function (req, res) {
   });
 }
 
-exports.getUser = function (req, res) {
-  user.get(req.params.id, function (err, result) {
-    if (err) return res.send(err);
-    
-    res.send(result);
-  });
+exports.getItem = function (req, res) {
+  var item = req.params.item;
+
+  if (items[item]) {
+    if (req.params.id) {
+      items[item].get(req.params.id, function (err, result) {
+        if (err) return res.send(err);
+        res.send(result);
+      });
+    } else {
+      items[item].get(function (err, result) {
+        if (err) return res.send(err);
+        res.send(result);
+      });
+    }
+  } else {
+    res.send(new Error(item + ' not found'));
+  }
 }
 
-exports.postUser = function (req, res) {
-  user.post(req.body, function (err) {
-    if (err) return res.send(err);
-    
-    res.send();
-  });
+exports.postItem = function (req, res) {
+  var item = req.params.item;
+
+  if (items[item]) {
+    items[item].post(req.body, function (err, result) {
+      if (err) return res.send(err);
+
+      res.send(result);
+    });
+  } else {
+    res.send(new Error(item + ' not found'));
+  }
 }
 
-exports.putUser = function (req, res) {
-  var data = req.body;
-  data.id = req.params.id;
-  
-  user.put(data, function (err) {
-    if (err) return res.send(err);
-    
-    res.send();
-  });
+exports.putItem = function (req, res) {
+  var item = req.params.item;
+
+  if (items[item]) {
+    items[item].get(req.params.id, req.body, function (err, result) {
+      if (err) return res.send(err);
+
+      res.send(result);
+    });
+  } else {
+    res.send(new Error(item + ' not found'));
+  }
 }
