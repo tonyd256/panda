@@ -1,0 +1,14 @@
+node_modules/*
+config.js
+.c9*
+.bash_history
+.bash_logout
+.bashrc
+.cache/
+.forever/
+.gitconfig
+.npm/
+.profile
+.selected_editor
+.ssh/
+.viminfo
