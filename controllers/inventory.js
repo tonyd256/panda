@@ -8,7 +8,10 @@ exports.inventory = {
     }
 
     if (id) {
-      model.findById(id, cb);
+      model.findById(id)
+      .populate('beer')
+      .populate('user', { password: 0 })
+      .run(cb);
     } else {
       model.find({}, cb);
     }

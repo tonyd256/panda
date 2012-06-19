@@ -8,7 +8,9 @@ exports.beer = {
     }
 
     if (id) {
-      model.findById(id, cb);
+      model.findById(id)
+      .populate('creator', { password: 0 })
+      .run(cb);
     } else {
       model.find({}, cb);
     }
