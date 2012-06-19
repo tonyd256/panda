@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // other possible attributes:
-// + ABV
 // + volume per container (12oz bottle vs 16oz bottle)
 // other thoughts:
 // + should we separate out beer categories? (into it's own table)
@@ -10,6 +9,7 @@ var Schema = mongoose.Schema;
 var sBeer = new Schema({
   name: { type: String, required: true },
   style: { type: String, required: true },
+  abv: { type: Number, required: true },
   creator: { type: Schema.ObjectId, required: true, ref:'user' },
   bottled: { type: Date, required: true },
   description: String,

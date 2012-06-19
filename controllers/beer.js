@@ -19,6 +19,7 @@ exports.beer = {
     var b = new model({
       name: data.name,
       style: data.style,
+      abv: data.abv,
       creator: data.creator,
       bottled: data.bottled,
       description: data.description
